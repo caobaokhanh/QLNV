@@ -1,7 +1,7 @@
 // mảng để lưu lại các nhân viên
 let employees = [];
 
-// biến kiểm tra xem form đã được submit hay chưa
+// kiểm tra xem form đã được submit hay chưa
 let isSubmitted = false;
 
 init();
@@ -11,7 +11,6 @@ function init() {
   // || lấy giá trị true đầu tiên
   employees = JSON.parse(localStorage.getItem("employees")) || [];
 
-  // HÀM MAP ĐI QUA TỪNG OBJECT TRONG EMPLOYEE RỒI TRUY CẬP TỪNG PHẦN TỬ
   employees = employees.map((value) => {
     return new Employee(
       value.id,
@@ -31,7 +30,8 @@ function init() {
 getElement("btnThem").onclick = function () {
   getElement("btnCapNhat").disabled = true;
 };
-// thêm nhân viên
+
+// Thêm nhân viên
 function addEmployee() {
   isSubmitted = true;
   let employee = validate();
@@ -48,7 +48,7 @@ function addEmployee() {
   display(employees);
 }
 
-// xóa nhân viên
+// Xóa nhân viên
 function removeEmployee(employeeId) {
   employees = employees.filter((value) => {
     return value.id !== employeeId;
@@ -58,7 +58,7 @@ function removeEmployee(employeeId) {
   display(employees);
 }
 
-// hiển thị
+// Hiển thị
 function display(employees) {
   let html = employees.reduce((result, value) => {
     return (
@@ -88,7 +88,7 @@ function display(employees) {
   getElement("tableDanhSach").innerHTML = html;
 }
 
-// cập nhật
+// Cập nhật
 function updateEmployee() {
   let employee = validate();
   if (!employee) {
@@ -108,6 +108,7 @@ function updateEmployee() {
   display(employees);
 }
 
+// reset
 function resetForm() {
   //input
   getElement("tknv").value = "";
@@ -129,7 +130,7 @@ function resetForm() {
   getElement("tbGiolam").innerHTML = "";
 }
 
-// lấy thông tin nhân viên
+// Lấy thông tin nhân viên
 function selectEmployee(employeeId) {
   let employee = employees.find((value) => {
     return value.id === employeeId;
@@ -151,9 +152,9 @@ function selectEmployee(employeeId) {
   $("#myModal").modal("show");
 }
 
-// tìm nhân viên theo xếp loại
+// Tìm nhân viên theo xếp loại
 function findEmployee() {
-  // B1 : DOM INPUT
+  // B1 : DOM
   let search = document.getElementById("searchName").value;
   search = search.trim(); //xóa bỏ khoảng trắng đầu cuối
   search = search.toLowerCase();
@@ -164,19 +165,19 @@ function findEmployee() {
     return type.includes(search);
   });
 
-  // B3 : HIỂN THỊ LẠI
+  // B3 : HIỂN THỊ
   if (newEmployees.length === 0) {
     alert("Không có loại nhân viên bạn cần tìm");
   }
   display(newEmployees);
 }
 
-// utils
+// Utils
 function getElement(selector) {
   return document.getElementById(selector);
 }
 
-// hàm kiểm tra giá trị có rỗng hay không
+// Hàm kiểm tra giá trị có rỗng hay không
 function isRequired(value) {
   // trim xỏa bỏ khảng trắng đầu và cuối
   if (!value.trim()) {
@@ -186,7 +187,7 @@ function isRequired(value) {
   return true;
 }
 
-// hàm kiểm tra mật khẩu
+// Hàm kiểm tra mật khẩu
 function isPassword(value) {
   let regex =
     /^(?=.*[A-Z])(?=.*[!&%\/()=\?\^\*\+\]\[#><;:,\._-|@])(?=.*[0-9])(?=.*[a-z]).{6,10}$/;
@@ -195,7 +196,7 @@ function isPassword(value) {
   return regex.test(value);
 }
 
-// hàm kiểm tra số tài khoản
+// Hàm kiểm tra số tài khoản
 function checkAccountNumber(accountNumber) {
   // Chuyển số tài khoản thành chuỗi
   var accountNumberString = accountNumber.toString();
@@ -209,7 +210,7 @@ function checkAccountNumber(accountNumber) {
   }
 }
 
-// hàm kiểm tra tên tài khoản
+// Hàm kiểm tra tên tài khoản
 function checkAccountName(accountName) {
   if (
     typeof accountName === "string" &&
@@ -223,13 +224,13 @@ function checkAccountName(accountName) {
   }
 }
 
-// hàm kiểm tra email
+// Hàm kiểm tra email
 function isEmail(value) {
   let regex = /^[\w\-\.]+@([\w-]+\.)+[\w-]{2,}$/;
   return regex.test(value);
 }
 
-// hàm kiểm tra lương
+// Hàm kiểm tra lương
 function checkBasicSalary(salary) {
   var regex = /^\d+$/; // Biểu thức chính quy kiểm tra chuỗi là một số hoàn toàn
   if (regex.test(salary)) {
@@ -243,7 +244,7 @@ function checkBasicSalary(salary) {
   }
 }
 
-// hàm kiểm giờ làm
+// Hàm kiểm giờ làm
 function checkTimeWork(timework) {
   var regex = /^\d+$/; // Biểu thức chính quy kiểm tra chuỗi là một số hoàn toàn
   if (regex.test(timework)) {
@@ -257,7 +258,7 @@ function checkTimeWork(timework) {
   }
 }
 
-// hàm validation
+// Hàm validation
 function validate() {
   let id = getElement("tknv").value;
   let name = getElement("name").value;
@@ -352,9 +353,7 @@ function validate() {
   return undefined;
 }
 
-// hàm oninput nâng cao trải nghiệm người dùng
-
-// tài khoản
+// Tài khoản
 getElement("tknv").oninput = (event) => {
   if (!isSubmitted) return;
 
@@ -365,7 +364,7 @@ getElement("tknv").oninput = (event) => {
   }
 };
 
-// tên
+// Tên
 getElement("name").oninput = (event) => {
   if (!isSubmitted) return;
 
@@ -376,7 +375,7 @@ getElement("name").oninput = (event) => {
   }
 };
 
-// email
+// Email
 getElement("email").oninput = (event) => {
   if (!isSubmitted) return;
 
@@ -387,7 +386,7 @@ getElement("email").oninput = (event) => {
   }
 };
 
-// password
+// Password
 getElement("password").oninput = (event) => {
   if (!isSubmitted) return;
 
@@ -398,7 +397,7 @@ getElement("password").oninput = (event) => {
   }
 };
 
-// Ngày
+// Ngày làm
 getElement("datepicker").oninput = (event) => {
   if (!isSubmitted) return;
 
@@ -420,7 +419,7 @@ getElement("luongCB").oninput = (event) => {
   }
 };
 
-// chức vụ
+// Chức vụ
 getElement("chucvu").oninput = (event) => {
   if (!isSubmitted) return;
 
@@ -431,7 +430,7 @@ getElement("chucvu").oninput = (event) => {
   }
 };
 
-// giờ làm
+// Giờ làm
 getElement("gioLam").oninput = (event) => {
   if (!isSubmitted) return;
 
@@ -441,5 +440,3 @@ getElement("gioLam").oninput = (event) => {
     idSpan.innerHTML = "";
   }
 };
-
-console.log(checkAccountName("Hào"));
